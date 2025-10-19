@@ -401,27 +401,7 @@ class OptionParser9
           break
         end
 
-        if arg.starts_with?("--")
-          value_index = arg.index('=')
-          if value_index
-            flag = arg[0...value_index]
-            value = arg[value_index + 1..-1]
-          else
-            flag = arg
-            value = nil
-          end
-        elsif arg.starts_with?('-')
-          if arg.size > 2
-            flag = arg[0..1]
-            value = arg[2..-1]
-          else
-            flag = arg
-            value = nil
-          end
-        else
-          flag = arg
-          value = nil
-        end
+        flag, value = parse_flag(arg)
 
         # Fetch handler of the flag.
         # If value is given even though handler does not take value, it is invalid, then it is skipped.
@@ -512,6 +492,25 @@ class OptionParser9
           @invalid_option.call(arg)
         end
       end
+    end
+  end
+
+  # Parses a command-line argument into a flag and optional inline value.
+  private def parse_flag(arg : String) : {String, String?}
+    if arg.starts_with?("--")
+      if value_index = arg.index('=')
+        {arg[0...value_index], arg[value_index + 1..-1]}
+      else
+        {arg, nil}
+      end
+    elsif arg.starts_with?('-')
+      if arg.size > 2
+        {arg[0..1], arg[2..-1]}
+      else
+        {arg, nil}
+      end
+    else
+      {arg, nil}
     end
   end
 end
