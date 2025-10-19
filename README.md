@@ -1,6 +1,8 @@
 # option_parser9
 
-POC
+[![test](https://github.com/kojix2/option_parser9/actions/workflows/ci.yml/badge.svg)](https://github.com/kojix2/option_parser9/actions/workflows/ci.yml)
+
+Experimental OptionParser
 
 ## Installation
 
@@ -20,3 +22,7 @@ POC
 require "option_parser9"
 ```
 
+## Development
+
+This project does not aim to create a custom OptionParser. 
+It aims to be merged into the standard library's OptionParser. 
